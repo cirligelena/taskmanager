@@ -6,6 +6,6 @@ buildNumber.properties
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
-.settings
-.project
-.myaplication_lib
+/taskmanager/.settings
+/taskmanager/.project
+/taskmanager/myaplication_lib

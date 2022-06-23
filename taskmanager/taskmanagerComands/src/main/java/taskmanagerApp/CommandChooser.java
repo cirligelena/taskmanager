@@ -20,7 +20,6 @@ public class CommandChooser {
 			String ln = args[2];
 			String un = args[3];
 			User user = new User(fn, ln, un);
-			logger.info("User was created succesfully!");
 			return (Command) new service.AddUserCommand(user);
 			
 		} else if (method.equals("showAllUsers")) {
@@ -31,13 +30,12 @@ public class CommandChooser {
 			String td = args[3];
 			String gn = args[4];
 			Task task = new Task(un, tt, td, gn);
-			logger.info("Task was added");
 			return (Command) new service.AddTaskToUserCommand(task);
 			
 		} else if (method.equals("showTasks")) {
 			return (Command) new service.ShowUserTaskCommand(); 
 		} else
-			
+			logger.error("This command does not exist");
 			return null; 
 
 	}

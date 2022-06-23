@@ -1,11 +1,10 @@
 package taskmanagerApp;
 
-import java.sql.SQLException;
 
 public class MyAplication {
 	static CommandExecutor executor = new CommandExecutor();
 
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	public static void main(String[] args){
 		
 		executor.executeCommand(args[0]);
 

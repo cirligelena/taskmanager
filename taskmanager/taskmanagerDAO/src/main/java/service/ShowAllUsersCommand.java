@@ -1,12 +1,12 @@
 package service;
 
-import java.sql.SQLException;
+
 import dao.DAOFactory;
 
 public class ShowAllUsersCommand {
 	
 
-	public void execute() throws ClassNotFoundException, SQLException {
+	public void execute(){
 		DAOFactory.getDAO("User").select();
 	}
 

@@ -1,6 +1,5 @@
 package service;
 
-import java.sql.SQLException;
 import dao.DAOFactory;
 import objects.User;
 
@@ -12,7 +11,7 @@ public class AddUserCommand implements Command {
 	}
 
 	@Override
-	public void execute() throws ClassNotFoundException, SQLException {
+	public void execute(){
 		DAOFactory.getDAO("User").insert(user);
 	}
 }

@@ -1,6 +1,5 @@
 package service;
 
-import java.sql.SQLException;
 import dao.DAOFactory;
 import objects.Task;
 
@@ -11,7 +10,7 @@ public class AddTaskToUserCommand{
 		this.task = task;
 	}
 
-	public void execute() throws ClassNotFoundException, SQLException {
+	public void execute() {
 		DAOFactory.getDAO("Task").insert(this.task);
 	}
 
