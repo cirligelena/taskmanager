@@ -11,6 +11,8 @@ import objects.User;
 
 
 public class MyAplication {
+	static CommandExecutor commandExecutor = new CommandExecutor();
+	
 	private static final Logger logger = LogManager.getLogger(MyAplication.class);
 	 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
@@ -22,20 +24,20 @@ public class MyAplication {
 			String ln = args[2];
 			String un = args[3];
 			User user = new User(fn, ln, un);
-			CommandFactory.getCommand(method, user).execute();
+			commandExecutor.executeCommand(method, user);
 			logger.info("User was created succesfully!");
 		} else if (method.equals("showAllUsers")) {
-			CommandFactory.getCommand(method).execute();
+			commandExecutor.executeCommand(method);
 		} else if (method.equals("addTask")) {
 			String un = args[1];
 			String tt = args[2];
 			String td = args[3];
 			String gn = args[4];
 			Task task = new Task(un, tt, td, gn);
-			CommandFactory.getCommand(method, task).execute();
+			commandExecutor.executeCommand(method, task);
 			logger.info("Task was added");
 		} else if (method.equals("showTasks")) {
-			CommandFactory.getCommand(method).execute();
+			commandExecutor.executeCommand(method);
 		} else
 			logger.error("Such command doesn't exist");
 

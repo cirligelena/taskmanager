@@ -10,7 +10,7 @@ import service.Command;
 public class CommandFactory {
 	   
    
-	public static Command getCommand(String type) {
+	public Command getCommand(String type) {
 		 if (type.equals("showAllUsers")) {
 			return (Command) new service.ShowAllUsersCommand();
 		}else if (type.equals("showTasks")) {
@@ -19,7 +19,7 @@ public class CommandFactory {
 			return null;
 	}
 	
-	public static Command getCommand(String type, Object object) {
+	public Command getCommand(String type, Object object) {
 		if (type.equals("createUser")) {
 			return (Command)new service.AddUserCommand((User) object);
 		}else if (object.equals("showTasks")) {

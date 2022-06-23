@@ -1,6 +1,7 @@
 package objects;
 
 public class User {
+	private String id;
 	private String first_name;
 	private String last_name;
 	private String user_name;
@@ -15,7 +16,13 @@ public class User {
 		this.last_name = last_name;
 		this.user_name = user_name;
 	}
-
+	
+	public User(String id, String first_name, String last_name, String user_name) {
+		this.id = id;
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.user_name = user_name;
+	}
 	public String getFirst_name() {
 		return first_name;
 	}
@@ -39,10 +46,17 @@ public class User {
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
 	}
+	
+	public String getId() {
+		return id;
+	}
 
+	public void setID(String id) {
+		this.id = id;
+	}
 	@Override
 	public String toString() {
-		return "First Name: " + first_name + " Last Name: " + last_name + " UserName: " + user_name;
+		return "ID:" + id + "First Name: " + first_name + " Last Name: " + last_name + " UserName: " + user_name;
 	}
 
 }
