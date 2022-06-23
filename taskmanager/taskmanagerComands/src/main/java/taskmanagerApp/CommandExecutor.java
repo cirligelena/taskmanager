@@ -7,16 +7,14 @@ import java.util.List;
 import service.Command;
 
 public class CommandExecutor {
-	CommandFactory factory;
+	static CommandChooser chooser;
+	String [] args;
 	
 	private final List<Command> commands = new ArrayList<>();
 	
-	public void executeCommand (String type) throws ClassNotFoundException, SQLException {
-		commands.add(factory.getCommand(type));
-		factory.getCommand(type).execute();
+	public void executeCommand (String string) throws ClassNotFoundException, SQLException{	
+		commands.add(chooser.getCommand(args));
+		chooser.getCommand(args).execute();
 	}
-	public void executeCommand (String type, Object object) throws ClassNotFoundException, SQLException {
-		commands.add(factory.getCommand(type));
-		factory.getCommand(type).execute();
-	}
+	
 }
