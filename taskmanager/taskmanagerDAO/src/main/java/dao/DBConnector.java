@@ -1,17 +1,18 @@
 package dao;
 
 import java.sql.*;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import helper.Helper;
 
 
 class DBConnector {
 	private static DBConnector instance;
 	private static Connection connection;
-	private final String USERNAME = "root";
-	private final String PASSWORD = "root";
-	private final String URL = "jdbc:mysql://localhost:3306/taskmanager";
+	Helper helper = new Helper();
+	private final String USERNAME = helper.readProperty("USERNAME");
+	private final String PASSWORD = helper.readProperty("PASSWORD");
+	private final String URL = helper.readProperty("URL");
 
 	private static final Logger logger = LogManager.getLogger(DBConnector.class);
 	

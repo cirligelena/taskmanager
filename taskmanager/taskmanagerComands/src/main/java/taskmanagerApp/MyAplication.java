@@ -1,12 +1,13 @@
 package taskmanagerApp;
 
+import commands.CommandFactory;
 
 public class MyAplication {
-	static CommandExecutor executor = new CommandExecutor();
+	static CommandFactory commandFactory = new CommandFactory();
 
 	public static void main(String[] args){
 		
-		executor.executeCommand(args[0]);
+		commandFactory.getCommand(args).execute();
 
 	}
 }

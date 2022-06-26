@@ -1,58 +1,73 @@
 package objects;
 
 public class Task {
-	private String insert_un;
-	private String task_title;
-	private String task_description;
-	private String group_name;
+	private int userID;
+	private String userName;
+	private String taskTitle;
+	private String taskDescription;
+	private String groupName;
 
 	public Task() {
 	}
 
 	;
 
-	public Task(String insert_un, String task_title, String task_description, String group_name) {
-		this.insert_un = insert_un;
-		this.task_title = task_title;
-		this.task_description = task_description;
-		this.group_name = group_name;
+	public Task(int userID, String taskTitle, String taskDescription, String groupName) {
+		this.userID = userID;
+		this.taskTitle = taskTitle;
+		this.taskDescription = taskDescription;
+		this.groupName = groupName;
+	}
+	
+	public Task(String userName, String taskTitle, String taskDescription, String groupName) {
+		this.userName = userName;
+		this.taskTitle = taskTitle;
+		this.taskDescription = taskDescription;
+		this.groupName = groupName;
+	}
+	public String getUserName() {
+		return userName;
 	}
 
-	public String getInsert_un() {
-		return insert_un;
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public int getUserID() {
+		return userID;
 	}
 
-	public void setInsert_un(String insert_un) {
-		this.insert_un = insert_un;
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 
-	public String getTask_title() {
-		return task_title;
+	public String getTaskTitle() {
+		return taskTitle;
 	}
 
-	public void setTask_title(String task_title) {
-		this.task_title = task_title;
+	public void setTaskTitle(String taskTitle) {
+		this.taskTitle = taskTitle;
 	}
 
-	public String getTask_description() {
-		return task_description;
+	public String getTaskDescription() {
+		return taskDescription;
 	}
 
-	public void setTask_description(String task_description) {
-		this.task_description = task_description;
+	public void setTaskDescription(String taskDescription) {
+		this.taskDescription = taskDescription;
 	}
 
-	public String getGroup_name() {
-		return group_name;
+	public String getGroupName() {
+		return groupName;
 	}
 
-	public void setGroup_name(String group_name) {
-		this.group_name = group_name;
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
 
 	@Override
 	public String toString() {
-		return "User_name: " + insert_un + " Task_title: " + task_title + " Task_description: " + task_description
-				+ " Assigned to " + group_name;
+		return "User: " + userID + " Task_title: " + taskTitle + " Task_description: " + taskDescription
+				+ " Assigned to " + groupName;
 	}
+	
 }

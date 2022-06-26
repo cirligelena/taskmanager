@@ -2,49 +2,49 @@ package objects;
 
 public class User {
 	private String id;
-	private String first_name;
-	private String last_name;
-	private String user_name;
+	private String firstName;
+	private String lastName;
+	private String userName;
 
 	public User() {
 	}
 
 	;
 
-	public User(String first_name, String last_name, String user_name) {
-		this.first_name = first_name;
-		this.last_name = last_name;
-		this.user_name = user_name;
+	public User(String firstName, String lastName, String userName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
 	}
 	
-	public User(String id, String first_name, String last_name, String user_name) {
+	public User(String id, String firstName, String lastName, String userName) {
 		this.id = id;
-		this.first_name = first_name;
-		this.last_name = last_name;
-		this.user_name = user_name;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
 	}
-	public String getFirst_name() {
-		return first_name;
-	}
-
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public String getLast_name() {
-		return last_name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public String getUser_name() {
-		return user_name;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	public String getId() {
@@ -56,7 +56,7 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "ID:" + id + "First Name: " + first_name + " Last Name: " + last_name + " UserName: " + user_name;
+		return "ID:" + id + "First Name: " + firstName + " Last Name: " + lastName + " UserName: " + userName;
 	}
 
 }
