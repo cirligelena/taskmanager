@@ -1,11 +1,12 @@
 package commands;
 
-
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import taskmanagerApp.MyAplication;
-
+/**
+* Creates a necessary Command instance depending on introduced String parameter 
+* @param one of the following: "createUser", "showAllUsers", "addTask", "showAllTasks" 
+*/
 public class CommandFactory {
 	private static final Logger logger = LogManager.getLogger(MyAplication.class);
 	public Command getCommand (String [] args) {
