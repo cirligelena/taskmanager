@@ -5,21 +5,19 @@ import objects.User;
 import service.UserDAOService;
 
 public class AddUserCommand implements Command {
-	String []args;
-	    String fn = args[1];
-		String ln = args[2];
-		String un = args[3];
-		User user = new User(fn, ln, un);
-		@SuppressWarnings("rawtypes")
-		UserDAOService userDAOService = new UserDAOService();
+	private String []args;
 		
-		AddUserCommand (String []args){
-			this.args = args;
+		AddUserCommand (String[] args){
+			this.args = args;			 
 		}
-	
-
+		public String [] getArgs() {
+			return args;
+		}
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void execute(){
-		userDAOService.createDao().insert(user);
+		String[] args = getArgs();
+		User user = new User(args[1], args[2], args[3]);
+		new UserDAOService().createDao().insert(user);
 	}
 }

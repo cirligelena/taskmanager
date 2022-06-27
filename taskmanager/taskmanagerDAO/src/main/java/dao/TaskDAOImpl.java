@@ -16,7 +16,7 @@ import objects.Task;
 	public void insert(Task task) {
 		DBConnector.getInstance();
 		Connection conn = DBConnector.getConnection();
-		String insert = "INSERT INTO tasks (user_id, task_title, task_description, group_name) values ((SELECT id FROM users WHERE user_name = '?'), '?', '?', '?')";
+		String insert = "INSERT INTO tasks (user_id, task_title, task_description, group_name) values ((SELECT id FROM users WHERE user_name = ?), ?, ?, ?)";
 		PreparedStatement prepInsert;
 		try {
 			prepInsert = conn.prepareStatement(insert);
@@ -27,6 +27,7 @@ import objects.Task;
 			prepInsert.execute();
 		} catch (SQLException e) {
 			logger.error("Error while executing SQL statement ");
+			e.printStackTrace();
 		}
 	}
 
@@ -51,3 +52,5 @@ import objects.Task;
 			}
 	}
 }
+
+ //"INSERT INTO tasks (user_id, task_title, task_description, group_name) values ((SELECT id FROM users WHERE user_name = '?'), '?', '?', '?')";

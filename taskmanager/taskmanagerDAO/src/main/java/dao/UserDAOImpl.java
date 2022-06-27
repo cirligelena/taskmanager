@@ -23,16 +23,18 @@ class UserDAOImpl implements UserDAO<User> {
 		DBConnector.getInstance();
 		Connection conn = DBConnector.getConnection();
 		String insert = "insert into users (first_name, last_name, user_name) values(?, ?, ?)";
-		PreparedStatement prepInsert;
-		try {
-			prepInsert = conn.prepareStatement(insert);
-			prepInsert.setString(1, user.getFirstName());
-			prepInsert.setString(2, user.getLastName());
-			prepInsert.setString(3, user.getUserName());
-			prepInsert.execute();
-		} catch (SQLException e) {
-			logger.error("Error while executing SQL statement ");
-		}
+		PreparedStatement prepInsert;			
+			try {
+				prepInsert = conn.prepareStatement(insert);
+				prepInsert.setString(1, user.getFirstName());
+				prepInsert.setString(2, user.getLastName());
+				prepInsert.setString(3, user.getUserName());
+				prepInsert.execute();
+			} catch (SQLException e) {
+			
+				logger.error( "Error while executing SQL statement ");
+				e.printStackTrace();
+			}
 	}
 
 	public void select() {

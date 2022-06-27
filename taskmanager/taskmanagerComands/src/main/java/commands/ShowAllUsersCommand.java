@@ -4,12 +4,10 @@ import service.UserDAOService;
 
 
 public class ShowAllUsersCommand implements Command{
-	@SuppressWarnings("rawtypes")
-	UserDAOService userDAOService = new UserDAOService();
 	
-
+	@SuppressWarnings("rawtypes")
 	public void execute(){
-		 userDAOService.createDao().select();
+		new UserDAOService().createDao().select();
 	}
 	
 }
