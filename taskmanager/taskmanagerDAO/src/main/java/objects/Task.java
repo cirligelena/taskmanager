@@ -1,24 +1,33 @@
 package objects;
-
+/**
+* Here is one of the main entity we'll be using to introduce data in our table "Tasks"
+* 
+*/
 public class Task {
 	private int userID;
 	private String userName;
 	private String taskTitle;
 	private String taskDescription;
 	private String groupName;
-
+	/** 
+	* Class constructor.
+	*/
 	public Task() {
 	}
 
 	;
-
+	/** 
+	* Class constructor with @param UserID, taskTitle, taskDescription, groupName
+	*/
 	public Task(int userID, String taskTitle, String taskDescription, String groupName) {
 		this.userID = userID;
 		this.taskTitle = taskTitle;
 		this.taskDescription = taskDescription;
 		this.groupName = groupName;
 	}
-	
+	/** 
+	* Class constructor with @param UserName instead of UserID, taskTitle, taskDescription, groupName
+	*/
 	public Task(String userName, String taskTitle, String taskDescription, String groupName) {
 		this.userName = userName;
 		this.taskTitle = taskTitle;

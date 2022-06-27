@@ -4,7 +4,14 @@ import java.sql.*;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import helper.Helper;
-
+/**
+ * This class is used for creating a MYSQL DBConnection. 
+ * DB connection is creating using a Singleton design pattern.
+ * The values of environment variables (username, password and URL) are stored in a distinct file config.properties.
+ * In order to use this App on other computer, please create a config.properties file.  
+ * @author ecirlig
+ *
+ */
 
 class DBConnector {
 	private static DBConnector instance;
