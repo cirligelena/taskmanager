@@ -1,13 +1,13 @@
 package commands;
 
-import service.UserDAOService;
+import service.UserService;
+import service.UserServiceImpl;
 
+public class ShowAllUsersCommand implements Command {
+	private UserService userServiceImpl = new UserServiceImpl();
 
-public class ShowAllUsersCommand implements Command{
-	
-	@SuppressWarnings("rawtypes")
-	public void execute(){
-		new UserDAOService().createDao().select();
+	public void execute() {
+		userServiceImpl.showAllUsers();
 	}
-	
+
 }

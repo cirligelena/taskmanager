@@ -1,62 +1,70 @@
 
 package dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import objects.User;
+import entity.User;
 
-class UserDAOImpl implements UserDAO<User> {
-	
-	UserDAOImpl(){
-		
-	};
+public class UserDAOImpl extends DAOAbstract<User> {
+
 	private static final Logger logger = LogManager.getLogger(DBConnector.class);
 
-	public void insert(User user) {
-		DBConnector.getInstance();
-		Connection conn = DBConnector.getConnection();
-		String insert = "insert into users (first_name, last_name, user_name) values(?, ?, ?)";
-		PreparedStatement prepInsert;			
-			try {
-				prepInsert = conn.prepareStatement(insert);
-				prepInsert.setString(1, user.getFirstName());
-				prepInsert.setString(2, user.getLastName());
-				prepInsert.setString(3, user.getUserName());
-				prepInsert.execute();
-			} catch (SQLException e) {
-			
-				logger.error( "Error while executing SQL statement ");
-				e.printStackTrace();
-			}
+	public int insert(User user) {
+		try {
+			PreparedStatement prepstatement = getInsertStatement(user);
+			prepstatement.setString(1, user.getFirstName());
+			prepstatement.setString(2, user.getLastName());
+			prepstatement.setString(3, user.getUserName());
+			prepstatement.execute();
+			logger.info("User was added");
+			closeDBConnection();
+		} catch (SQLException e) {
+
+			logger.error("Error while executing SQL statement ", e);
+		}
+		return 0;
 	}
 
 	public void select() {
-		DBConnector.getInstance();
-		Connection conn = DBConnector.getConnection();
-		Statement statement;
 		try {
-			statement = conn.createStatement();
-			ResultSet resultSet = statement.executeQuery("select*from users");
+			ResultSet resultSet = getSelectAllStatement().executeQuery();
 			while (resultSet.next()) {
-				User user = new User();
-				user.setFirstName(resultSet.getString(2));
-				user.setLastName(resultSet.getString(3));
-				user.setUserName(resultSet.getString(4));
-				System.out.println("First Name: " + user.getFirstName() + " Last Name: " + user.getLastName() + " Username: " + user.getUserName());
-
+				User user = createObject(resultSet);
+				System.out.println("First Name: " + user.getFirstName() + " Last Name: " + user.getLastName()
+						+ " Username: " + user.getUserName());
 			}
+			closeDBConnection();
 		} catch (SQLException e) {
-			logger.error("Error while executing SQL statement ");
+			logger.error("Error while executing SQL statement ", e);
 		}
 	}
 
-	
-
+	@Override
+	protected PreparedStatement getSelectAllStatement() throws SQLException {
+		String query = "select*from users";
+		PreparedStatement prepstatement = getDBConnection().prepareStatement(query);
+		return prepstatement;
 	}
+
+	@Override
+	protected PreparedStatement getInsertStatement(User user) throws SQLException {
+		String query = "insert into users (first_name, last_name, user_name) values(?, ?, ?)";
+		PreparedStatement prepstatement = getDBConnection().prepareStatement(query);
+		return prepstatement;
+	}
+
+	@Override
+	protected User createObject(ResultSet resultSet) throws SQLException {
+		User user = new User();
+		user.setFirstName(resultSet.getString(2));
+		user.setLastName(resultSet.getString(3));
+		user.setUserName(resultSet.getString(4));
+		return user;
+	}
+
+}
