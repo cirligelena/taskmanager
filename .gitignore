@@ -10,3 +10,10 @@ buildNumber.properties
 /taskmanager/.project
 /taskmanager/myaplication_lib
 config.properties
+/taskmanager/taskmanagerComands/.settings
+/taskmanager/taskmanagerComands/.project
+/taskmanager/taskmanagerComands/.classpath
+/taskmanager/taskmanagerDAO/.settings
+/taskmanager/taskmanagerDAO/.project
+/taskmanager/taskmanagerDAO/.classpath
+.project
