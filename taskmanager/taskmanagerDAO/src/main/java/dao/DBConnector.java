@@ -23,7 +23,7 @@ import helper.Helper;
 class DBConnector {
 	private static DBConnector instance;
 	private static Connection connection;
-	Helper helper = new Helper();
+	private Helper helper = new Helper();
 	private final String USERNAME = helper.readProperty("USERNAME");
 	private final String PASSWORD = helper.readProperty("PASSWORD");
 	private final String URL = helper.readProperty("URL");

@@ -4,43 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
 import entity.Task;
 
-public class TaskDAOImpl extends DAOAbstract<Task> {
-	private static final Logger logger = LogManager.getLogger(DBConnector.class);
-
-	public int insert(Task task) {
-		try {
-			PreparedStatement prepstatement = getInsertStatement(task);
-			prepstatement.setString(1, task.getUserName());
-			prepstatement.setString(2, task.getTaskTitle());
-			prepstatement.setString(3, task.getTaskDescription());
-			prepstatement.setString(4, task.getGroupName());
-			prepstatement.execute();
-			logger.info("Task was added");
-			closeDBConnection();
-		} catch (SQLException e) {
-			logger.error("Error while executing SQL statement ", e);
-
-		}
-		return 0;
-	}
-
-	public void select() {
-		try {
-			ResultSet resultSet = getSelectAllStatement().executeQuery();
-			while (resultSet.next()) {
-				Task task = createObject(resultSet);
-				System.out.println(task);
-			}
-			closeDBConnection();
-		} catch (SQLException e) {
-			logger.error("Error while executing SQL statement ", e);
-		}
-	}
+public class TaskDAOImpl extends DAOAbstract<Task> implements TaskDAO<Task> {
 
 	@Override
 	protected PreparedStatement getSelectAllStatement() throws SQLException {
@@ -53,6 +19,11 @@ public class TaskDAOImpl extends DAOAbstract<Task> {
 	protected PreparedStatement getInsertStatement(Task task) throws SQLException {
 		String query = "INSERT INTO tasks (user_id, task_title, task_description, group_name) values ((SELECT id FROM users WHERE user_name = ?), ?, ?, ?)";
 		PreparedStatement prepstatement = getDBConnection().prepareStatement(query);
+		prepstatement.setString(1, task.getUserName());
+		prepstatement.setString(2, task.getTaskTitle());
+		prepstatement.setString(3, task.getTaskDescription());
+		prepstatement.setString(4, task.getGroupName());
+
 		return prepstatement;
 	}
 

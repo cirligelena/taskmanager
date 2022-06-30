@@ -1,7 +1,5 @@
 package dao;
 
-import java.sql.SQLException;
-
 /**
  * Contains a method "select" without any parameters (implemented in next
  * classes as select all from a table)
@@ -11,8 +9,8 @@ import java.sql.SQLException;
  * 
  */
 public interface DAO<T> {
-	void select() throws SQLException;
+	void select();
 
-	int insert(T t) throws SQLException;
+	int insert(T t);
 
 }

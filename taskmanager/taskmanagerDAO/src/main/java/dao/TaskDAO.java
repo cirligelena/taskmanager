@@ -6,7 +6,9 @@ package dao;
  * introducing data in our table "Tasks"
  * 
  * @param <T>
+ * 
+ * @param <T>
  */
-public interface TaskDAO<T> extends DAO<T> {
+public interface TaskDAO<Task> extends DAO<Task> {
 
 }

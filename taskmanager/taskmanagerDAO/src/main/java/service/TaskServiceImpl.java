@@ -1,10 +1,11 @@
 package service;
 
+import dao.TaskDAO;
 import dao.TaskDAOImpl;
 import entity.Task;
 
 public class TaskServiceImpl implements TaskService {
-	private TaskDAOImpl taskDAOImpl = new TaskDAOImpl();
+	private TaskDAO<Task> taskDAOImpl = new TaskDAOImpl();
 
 	public TaskServiceImpl() {
 	}
