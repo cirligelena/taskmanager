@@ -4,6 +4,12 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import commands.CommandFactory;
+/**
+ * The main class of the 
+* Starts the program using main method String[] args arguments 
+ * @author ecirlig
+ *
+ */
 
 /**
  * The main class of the Starts the program using main method String[] args
