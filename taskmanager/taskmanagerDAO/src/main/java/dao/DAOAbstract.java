@@ -1,59 +1,55 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import helper.HibernateUtil;
 
 public abstract class DAOAbstract<T> implements DAO<T> {
 	private static final Logger logger = LogManager.getLogger(DAOAbstract.class);
-	private Connection conn;
+	protected SessionFactory factory = new HibernateUtil().getSessionFactory();
+	protected List<T> list;
+	protected Class<T> clazz;
 
 	public void select() {
-		ResultSet resultSet;
+		Session session = factory.openSession();
+		Transaction tx = null;
 		try {
-			resultSet = getSelectAllStatement().executeQuery();
-			while (resultSet.next()) {
-				T t = createObject(resultSet);
-				System.out.println(t);
+			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
+			Query<T> query = session.createQuery("from " + clazz.getName());
+			list = query.list();
+			tx.commit();
+			for (T t : list) {
+				System.out.println(t.toString());
 			}
-			closeDBConnection();
-		} catch (SQLException e) {
-			logger.error("Error while executing SQL statement ", e);
-		}
+		} catch (IllegalStateException e) {
+			if (tx != null)
+				tx.rollback();
+			logger.error(e);
+		} finally {
+			session.close();
 
+		}
 	}
 
-	public int insert(T t) {
-		int result;
+	public void insert(T t) {
+		Session session = factory.openSession();
 		try {
-			result = getInsertStatement(t).executeUpdate();
+			session.persist(t);
 			logger.info("Data has been written succesfully ");
-			closeDBConnection();
-		} catch (SQLException e) {
-			logger.error("Error while executing SQL statement ", e);
-			result = 0;
+		} catch (HibernateException e) {
+			logger.error(e);
+		} finally {
+			session.close();
 		}
-		return result;
-	}
-
-	protected abstract PreparedStatement getSelectAllStatement() throws SQLException;
-
-	protected abstract PreparedStatement getInsertStatement(T t) throws SQLException;
-
-	protected abstract T createObject(ResultSet resultSet) throws SQLException;
-
-	public Connection getDBConnection() {
-		DBConnector.getInstance();
-		conn = DBConnector.getConnection();
-		return conn;
-	}
-
-	public void closeDBConnection() throws SQLException {
-		conn.close();
 	}
 
 }

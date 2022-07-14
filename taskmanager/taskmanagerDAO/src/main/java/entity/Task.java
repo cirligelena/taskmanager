@@ -1,16 +1,36 @@
 package entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+
 /**
  * Here is one of the main entity we'll be using to introduce data in our table
  * "Tasks"
  * 
  */
+@Entity
+@Table(name = "tasks")
 public class Task {
-	private int userID;
-	private String userName;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "taskId_generator")
+	@SequenceGenerator(name = "taskId_generator", allocationSize = 1)
+	@Column(name = "id")
+	private int id;
+	@Column(name = "task_title")
 	private String taskTitle;
+	@Column(name = "task_description")
 	private String taskDescription;
-	private String groupName;
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
 
 	/**
 	 * Class constructor.
@@ -21,40 +41,29 @@ public class Task {
 	;
 
 	/**
-	 * Class constructor with @param UserID, taskTitle, taskDescription, groupName
+	 * Class constructor with @param taskTitle, taskDescription
 	 */
-	public Task(int userID, String taskTitle, String taskDescription, String groupName) {
-		this.userID = userID;
+	public Task(String taskTitle, String taskDescription) {
 		this.taskTitle = taskTitle;
 		this.taskDescription = taskDescription;
-		this.groupName = groupName;
+
 	}
 
-	/**
-	 * Class constructor with @param UserName instead of UserID, taskTitle,
-	 * taskDescription, groupName
-	 */
-	public Task(String userName, String taskTitle, String taskDescription, String groupName) {
-		this.userName = userName;
-		this.taskTitle = taskTitle;
-		this.taskDescription = taskDescription;
-		this.groupName = groupName;
+	public User getUser() {
+		return user;
 	}
 
-	public String getUserName() {
-		return userName;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public int getId() {
+		return id;
 	}
 
-	public int getUserID() {
-		return userID;
-	}
+	public void setId(int id) {
+		this.id = id;
 
-	public void setUserID(int userID) {
-		this.userID = userID;
 	}
 
 	public String getTaskTitle() {
@@ -73,18 +82,9 @@ public class Task {
 		this.taskDescription = taskDescription;
 	}
 
-	public String getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
-
 	@Override
 	public String toString() {
-		return "User: " + userID + " Task_title: " + taskTitle + " Task_description: " + taskDescription
-				+ " Assigned to " + groupName;
+		return "Task_title: " + taskTitle + " Task_description: " + taskDescription;
 	}
 
 }

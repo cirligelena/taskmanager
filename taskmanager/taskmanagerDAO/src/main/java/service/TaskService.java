@@ -5,8 +5,18 @@ package service;
  * order to restrict direct access from a command to DAO
  */
 public interface TaskService {
-	public void addTask(String userName, String taskTitle, String taskDescription, String groupName);
 
+	/**
+	 * This method will be used to create and save a new task into database
+	 * 
+	 * @param taskTitle
+	 * @param taskDescription
+	 */
+	public void addTask(String taskTitle, String taskDescription);
+
+	/**
+	 * This method will be used to show all tasks from the table
+	 */
 	public void showAllTasks();
 
 }

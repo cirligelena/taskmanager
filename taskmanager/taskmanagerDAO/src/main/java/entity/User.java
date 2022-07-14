@@ -1,15 +1,40 @@
 package entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 /**
  * Here is one of the main entity we'll be using to introduce data in our table
  * "Users"
  * 
  */
+@Entity
+@Table(name = "users")
 public class User {
-	private String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userId_generator")
+	@SequenceGenerator(name = "userId_generator", allocationSize = 1)
+	@Column(name = "id")
+	private int id;
+	@Column(name = "first_name")
 	private String firstName;
+	@Column(name = "last_name")
 	private String lastName;
+	@Column(name = "user_name")
 	private String userName;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	private Set<Task> tasklist = new HashSet<Task>();
 
 	/**
 	 * Class constructor.
@@ -31,7 +56,7 @@ public class User {
 	/**
 	 * Class constructor adding additional @param id
 	 */
-	public User(String id, String firstName, String lastName, String userName) {
+	public User(int id, String firstName, String lastName, String userName) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -62,12 +87,20 @@ public class User {
 		this.userName = userName;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setID(String id) {
+	public void setID(int id) {
 		this.id = id;
+	}
+
+	public Set<Task> getTasklist() {
+		return tasklist;
+	}
+
+	public void setTasklist(Set<Task> tasklist) {
+		this.tasklist = tasklist;
 	}
 
 	@Override

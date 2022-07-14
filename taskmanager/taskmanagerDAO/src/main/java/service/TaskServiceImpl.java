@@ -1,5 +1,7 @@
 package service;
 
+
+import annotations.SendMail;
 import dao.TaskDAO;
 import dao.TaskDAOImpl;
 import entity.Task;
@@ -10,9 +12,10 @@ public class TaskServiceImpl implements TaskService {
 	public TaskServiceImpl() {
 	}
 
+	@SendMail
 	@Override
-	public void addTask(String userName, String taskTitle, String taskDescription, String groupName) {
-		taskDAOImpl.insert(new Task(userName, taskTitle, taskDescription, groupName));
+	public void addTask(String taskTitle, String taskDescription) {
+		taskDAOImpl.insert(new Task(taskTitle, taskDescription));
 	}
 
 	@Override

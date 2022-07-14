@@ -1,38 +1,68 @@
 
 package dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
+import entity.Task;
 import entity.User;
 
 public class UserDAOImpl extends DAOAbstract<User> implements UserDAO<User> {
+	private static final Logger logger = LogManager.getLogger(UserDAOImpl.class);
 
-	@Override
-	protected PreparedStatement getSelectAllStatement() throws SQLException {
-		String query = "select*from users";
-		PreparedStatement prepstatement = getDBConnection().prepareStatement(query);
-		return prepstatement;
+	public UserDAOImpl() {
+		this.clazz = User.class;
 	}
 
 	@Override
-	protected PreparedStatement getInsertStatement(User user) throws SQLException {
-		String query = "insert into users (first_name, last_name, user_name) values(?, ?, ?)";
-		PreparedStatement prepstatement = getDBConnection().prepareStatement(query);
-		prepstatement.setString(1, user.getFirstName());
-		prepstatement.setString(2, user.getLastName());
-		prepstatement.setString(3, user.getUserName());
-		return prepstatement;
+	public void insertTask(String userName, Task task) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			User user = new User();
+			String q = "from User where userName = :userNameParam";
+			@SuppressWarnings("unchecked")
+			Query<User> query = session.createQuery(q);
+			query.setParameter("userNameParam", userName);
+			user = query.getSingleResult();
+			user.getTasklist().add(task);
+			task.setUser(user);
+			session.persist(user);
+			tx.commit();
+			logger.info("Data has been written succesfully ");
+		} catch (IllegalStateException e) {
+			if (tx != null)
+				tx.rollback();
+			logger.error(e);
+		} finally {
+
+			session.close();
+		}
 	}
 
 	@Override
-	protected User createObject(ResultSet resultSet) throws SQLException {
-		User user = new User();
-		user.setFirstName(resultSet.getString(2));
-		user.setLastName(resultSet.getString(3));
-		user.setUserName(resultSet.getString(4));
-		return user;
-	}
+	public void insertUserAndTask(User user, Task task) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			(user.getTasklist()).add(task);
+			task.setUser(user);
+			session.persist(user);
+			tx.commit();
+			logger.info("Data has been written succesfully ");
+		} catch (IllegalStateException e) {
+			if (tx != null)
+				tx.rollback();
+			logger.error(e);
+		} finally {
 
+			session.close();
+		}
+	}
 }
+

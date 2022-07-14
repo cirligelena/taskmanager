@@ -14,10 +14,14 @@ public class Helper {
 	private static final Logger logger = LogManager.getLogger(Helper.class);
 	private final Properties properties;
 
-	public Helper() {
+	public Properties getProperties() {
+		return properties;
+	}
+
+	public Helper(String fileName) {
 		properties = new Properties();
 		try {
-			properties.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+			properties.load(getClass().getClassLoader().getResourceAsStream(fileName));
 
 		} catch (IOException ioex) {
 			logger.error("IOException Occured while loading properties file::::" + ioex.getMessage());

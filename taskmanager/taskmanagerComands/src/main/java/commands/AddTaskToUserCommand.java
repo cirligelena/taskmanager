@@ -1,22 +1,24 @@
 package commands;
 
-import service.TaskServiceImpl;
+
+import service.UserService;
+import service.UserServiceImpl;
 
 public class AddTaskToUserCommand implements Command {
-	private TaskServiceImpl taskServiceImpl = new TaskServiceImpl();
+	private UserService userService;
 	private String userName;
 	private String taskTitle;
 	private String taskDescription;
-	private String groupName;
 
-	AddTaskToUserCommand(String userName, String taskTitle, String taskDescription, String groupName) {
+	AddTaskToUserCommand(String userName, String taskTitle, String taskDescription) {
 		this.userName = userName;
 		this.taskTitle = taskTitle;
 		this.taskDescription = taskDescription;
-		this.groupName = groupName;
+		userService = new UserServiceImpl();
 	}
 
+	@Override
 	public void execute() {
-		taskServiceImpl.addTask(userName, taskTitle, taskDescription, groupName);
+		userService.addTasktoUser(userName, taskTitle, taskDescription);
 	}
 }

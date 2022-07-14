@@ -9,12 +9,11 @@
 	</parent>
 	<artifactId>taskmanager.DAO</artifactId>
 	<dependencies>
-	
-   <dependency>
-<groupId>log4j</groupId>
-<artifactId>log4j</artifactId>
-<version>1.2.12</version>
-</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.12</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -38,10 +37,6 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-
-
 		</plugins>
-
 	</build>
-
 </project>

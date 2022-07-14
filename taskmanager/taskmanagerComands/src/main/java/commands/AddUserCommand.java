@@ -3,7 +3,9 @@ package commands;
 import service.UserServiceImpl;
 
 public class AddUserCommand implements Command {
-	private UserServiceImpl userServiceImpl = new UserServiceImpl();
+
+
+	private UserServiceImpl userService;
 	private String firstName;
 	private String lastName;
 	private String userName;
@@ -12,10 +14,12 @@ public class AddUserCommand implements Command {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
+		userService = new UserServiceImpl();
+
 	}
 
 	@Override
 	public void execute() {
-		userServiceImpl.addUser(firstName, lastName, userName);
+		userService.addUser(firstName, lastName, userName);
 	}
 }
