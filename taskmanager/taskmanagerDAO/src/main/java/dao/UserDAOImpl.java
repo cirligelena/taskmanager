@@ -1,62 +1,67 @@
 
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
-import objects.User;
+import entity.Task;
+import entity.User;
 
-class UserDAOImpl implements UserDAO<User> {
-	
-	UserDAOImpl(){
-		
-	};
-	private static final Logger logger = LogManager.getLogger(DBConnector.class);
+public class UserDAOImpl extends DAOAbstract<User> implements UserDAO<User> {
+	private static final Logger logger = LogManager.getLogger(UserDAOImpl.class);
 
-	public void insert(User user) {
-		DBConnector.getInstance();
-		Connection conn = DBConnector.getConnection();
-		String insert = "insert into users (first_name, last_name, user_name) values(?, ?, ?)";
-		PreparedStatement prepInsert;			
-			try {
-				prepInsert = conn.prepareStatement(insert);
-				prepInsert.setString(1, user.getFirstName());
-				prepInsert.setString(2, user.getLastName());
-				prepInsert.setString(3, user.getUserName());
-				prepInsert.execute();
-			} catch (SQLException e) {
-			
-				logger.error( "Error while executing SQL statement ");
-				e.printStackTrace();
-			}
+	public UserDAOImpl() {
+		this.clazz = User.class;
 	}
 
-	public void select() {
-		DBConnector.getInstance();
-		Connection conn = DBConnector.getConnection();
-		Statement statement;
+	@Override
+	public void insertTask(String userName, Task task) {
+		Session session = factory.openSession();
+		Transaction tx = null;
 		try {
-			statement = conn.createStatement();
-			ResultSet resultSet = statement.executeQuery("select*from users");
-			while (resultSet.next()) {
-				User user = new User();
-				user.setFirstName(resultSet.getString(2));
-				user.setLastName(resultSet.getString(3));
-				user.setUserName(resultSet.getString(4));
-				System.out.println("First Name: " + user.getFirstName() + " Last Name: " + user.getLastName() + " Username: " + user.getUserName());
+			tx = session.beginTransaction();
+			User user = new User();
+			String q = "from User where userName = :userNameParam";
+			@SuppressWarnings("unchecked")
+			Query<User> query = session.createQuery(q);
+			query.setParameter("userNameParam", userName);
+			user = query.getSingleResult();
+			user.getTasklist().add(task);
+			task.setUser(user);
+			session.persist(user);
+			tx.commit();
+			logger.info("Data has been written succesfully ");
+		} catch (IllegalStateException e) {
+			if (tx != null)
+				tx.rollback();
+			logger.error(e);
+		} finally {
 
-			}
-		} catch (SQLException e) {
-			logger.error("Error while executing SQL statement ");
+			session.close();
 		}
 	}
 
-	
+	@Override
+	public void insertUserAndTask(User user, Task task) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			(user.getTasklist()).add(task);
+			task.setUser(user);
+			session.persist(user);
+			tx.commit();
+			logger.info("Data has been written succesfully ");
+		} catch (IllegalStateException e) {
+			if (tx != null)
+				tx.rollback();
+			logger.error(e);
+		} finally {
 
+			session.close();
+		}
 	}
+}

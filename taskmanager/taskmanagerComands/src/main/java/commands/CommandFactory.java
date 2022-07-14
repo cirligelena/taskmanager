@@ -2,31 +2,43 @@ package commands;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+
 import taskmanagerApp.MyAplication;
+
 /**
-* Creates a necessary Command instance depending on introduced String parameter 
-* @param one of the following: "createUser", "showAllUsers", "addTask", "showAllTasks" 
-*/
+ * Creates a necessary Command instance depending on introduced String parameter
+ * 
+ * @param one of the following: "createUser", "showAllUsers", "addTask",
+ *            "showAllTasks"
+ */
 public class CommandFactory {
 	private static final Logger logger = LogManager.getLogger(MyAplication.class);
-	public Command getCommand (String [] args) {
 
+	public Command getCommand(String[] args) {
+		Command command = null;
 		String method = args[0];
-
-		if (method.equals("createUser")) {
-			return new AddUserCommand(args);
-			
-		} else if (method.equals("showAllUsers")) {
-			return new ShowAllUsersCommand();
-		} else if (method.equals("addTask")) {
-			return new AddTaskToUserCommand(args);
-			
-		}else if (method.equals("showAllTasks")) {
-			return new ShowAllTasksCommand(); 
-		} else
+		switch (method) {
+		case "createUser":
+			command = new AddUserCommand(args[1], args[2], args[3]);
+			break;
+		case "showAllUsers":
+			command = new ShowAllUsersCommand();
+			break;
+		case "addTask":
+			command = new AddTaskCommand(args[1], args[2]);
+			break;
+		case "showAllTasks":
+			command = new ShowAllTasksCommand();
+			break;
+		case "addTasktoUser":
+			command = new AddTaskToUserCommand(args[1], args[2], args[3]);
+			break;
+		case "addUserAndTask":
+			command = new AddUserAndTaskCommand(args[1], args[2], args[3], args[4], args[5]);
+		default:
 			logger.error("This command does not exist");
-			return null; 
+		}
+		return command;
 
 	}
-
 }

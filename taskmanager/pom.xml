@@ -7,22 +7,63 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<dependencies>
-	<!-- https://mvnrepository.com/artifact/log4j/log4j -->
-<dependency>
-<groupId>log4j</groupId>
-<artifactId>log4j</artifactId>
-<version>1.2.12</version>
-</dependency>
-
-	
+		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.12</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.29</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-java8 -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.activation/activation -->
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.9.5</version>
+		</dependency>
 	</dependencies>
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<version>1.7</version>
+				<configuration>
+					<complianceLevel>1.8</complianceLevel>
+					<source>1.8</source>
+					<target>1.8</target>
+					<showWeaveInfo>true</showWeaveInfo>
+					<verbose>true</verbose>
+					<Xlint>ignore</Xlint>
+					<encoding>UTF-8</encoding>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>test-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 		<pluginManagement>
 			<plugins>
 				<!--This plugin's configuration is used to store Eclipse m2e settings 
@@ -67,22 +108,64 @@
 							<manifest>
 								<mainClass>taskmanagerApp.MyAplication</mainClass>
 							</manifest>
+							<manifestEntries>
+								<Automatic-Module-Name>com.foo.bar</Automatic-Module-Name>
+							</manifestEntries>
 						</archive>
 					</configuration>
 				</plugin>
 			</plugins>
-
 		</pluginManagement>
 	</build>
-
-
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.4.0</version>
+				<reportSets>
+					<reportSet>
+						<id>aggregate</id>
+						<inherited>false</inherited>
+						<reports>
+							<report>aggregate</report>
+						</reports>
+					</reportSet>
+					<reportSet>
+						<id>default</id>
+						<reports>
+							<report>javadoc</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
 	<modules>
 		<module>taskmanagerComands</module>
 		<module>taskManagerDAO</module>
 	</modules>
-
 	<properties>
 		<maven-compiler-plugin-version>3.1</maven-compiler-plugin-version>
 	</properties>
-
+	<dependencyManagement>
+		<dependencies>
+			<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>5.6.7.Final</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.mail</groupId>
+				<artifactId>javax.mail</artifactId>
+				<version>1.6.2</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.activation</groupId>
+				<artifactId>activation</artifactId>
+				<version>1.1.1</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>

@@ -7,24 +7,29 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 /**
- * An auxiliary class used to get environment variables values from the config.properties file 
+ * An auxiliary class used to get environment variables values from the
+ * config.properties file
  */
 public class Helper {
-	 private static final Logger logger = LogManager.getLogger(Helper.class);
-	 private final Properties properties;
+	private static final Logger logger = LogManager.getLogger(Helper.class);
+	private final Properties properties;
 
-	   public Helper() {
-	        properties = new Properties();
-	        try {
-	            properties.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+	public Properties getProperties() {
+		return properties;
+	}
 
-	        } catch (IOException ioex) {
-	            logger.error("IOException Occured while loading properties file::::" +ioex.getMessage());
-	        }
-	    }
+	public Helper(String fileName) {
+		properties = new Properties();
+		try {
+			properties.load(getClass().getClassLoader().getResourceAsStream(fileName));
 
-	    public String readProperty(String keyName) {
-	        logger.info("Reading Property " + keyName);
-	        return properties.getProperty(keyName, "There is no key in the properties file");
-	    }
+		} catch (IOException ioex) {
+			logger.error("IOException Occured while loading properties file::::" + ioex.getMessage());
+		}
+	}
+
+	public String readProperty(String keyName) {
+		logger.info("Reading Property " + keyName);
+		return properties.getProperty(keyName, "There is no key in the properties file");
+	}
 }

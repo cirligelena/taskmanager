@@ -1,14 +1,12 @@
 package commands;
 
-import service.TaskDAOService;
+import service.TaskServiceImpl;
 
-public class ShowAllTasksCommand  implements Command{
-	
-	
-	@SuppressWarnings("rawtypes")
-	public void execute(){
-		new TaskDAOService().createDao().select();
-	}
-		
+public class ShowAllTasksCommand implements Command {
+	private TaskServiceImpl taskServiceImpl = new TaskServiceImpl();
+
+	public void execute() {
+		taskServiceImpl.showAllTasks();
 	}
 
+}
