@@ -1,23 +1,21 @@
 package commands;
 
-
-import objects.User;
-import service.UserDAOService;
+import service.UserServiceImpl;
 
 public class AddUserCommand implements Command {
-	private String []args;
-		
-		AddUserCommand (String[] args){
-			this.args = args;			 
-		}
-		public String [] getArgs() {
-			return args;
-		}
-	@SuppressWarnings("rawtypes")
+	private UserServiceImpl userServiceImpl = new UserServiceImpl();
+	private String firstName;
+	private String lastName;
+	private String userName;
+
+	AddUserCommand(String firstName, String lastName, String userName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
+	}
+
 	@Override
-	public void execute(){
-		String[] args = getArgs();
-		User user = new User(args[1], args[2], args[3]);
-		new UserDAOService().createDao().insert(user);
+	public void execute() {
+		userServiceImpl.addUser(firstName, lastName, userName);
 	}
 }

@@ -1,56 +1,39 @@
 package dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import entity.Task;
 
-import objects.Task;
+public class TaskDAOImpl extends DAOAbstract<Task> implements TaskDAO<Task> {
 
- class TaskDAOImpl implements TaskDAO<Task> {
-	 private static final Logger logger = LogManager.getLogger(DBConnector.class);
-	public void insert(Task task) {
-		DBConnector.getInstance();
-		Connection conn = DBConnector.getConnection();
-		String insert = "INSERT INTO tasks (user_id, task_title, task_description, group_name) values ((SELECT id FROM users WHERE user_name = ?), ?, ?, ?)";
-		PreparedStatement prepInsert;
-		try {
-			prepInsert = conn.prepareStatement(insert);
-			prepInsert.setString(1, task.getUserName());
-			prepInsert.setString(2, task.getTaskTitle());
-			prepInsert.setString(3, task.getTaskDescription());
-			prepInsert.setString(4, task.getGroupName());
-			prepInsert.execute();
-		} catch (SQLException e) {
-			logger.error("Error while executing SQL statement ");
-			e.printStackTrace();
-		}
+	@Override
+	protected PreparedStatement getSelectAllStatement() throws SQLException {
+		String query = "select * from tasks";
+		PreparedStatement prepstatement = getDBConnection().prepareStatement(query);
+		return prepstatement;
 	}
 
-		public void select() {
-			DBConnector.getInstance();
-			Connection conn = DBConnector.getConnection();
-			Statement statement;
-			try {
-				statement = conn.createStatement();
-				ResultSet resultSet = statement.executeQuery("select*from tasks");
-				while (resultSet.next()) {
-					Task task = new Task();
-					task.setUserID(resultSet.getInt(1));
-					task.setTaskTitle(resultSet.getString(2));
-					task.setTaskDescription(resultSet.getString(3));
-					task.setGroupName(resultSet.getString(4));
-					System.out.println(task); 
-				} 
-				
-			} catch (SQLException e) {
-				logger.error("Error while executing SQL statement ");
-			}
+	@Override
+	protected PreparedStatement getInsertStatement(Task task) throws SQLException {
+		String query = "INSERT INTO tasks (user_id, task_title, task_description, group_name) values ((SELECT id FROM users WHERE user_name = ?), ?, ?, ?)";
+		PreparedStatement prepstatement = getDBConnection().prepareStatement(query);
+		prepstatement.setString(1, task.getUserName());
+		prepstatement.setString(2, task.getTaskTitle());
+		prepstatement.setString(3, task.getTaskDescription());
+		prepstatement.setString(4, task.getGroupName());
+
+		return prepstatement;
+	}
+
+	@Override
+	protected Task createObject(ResultSet resultSet) throws SQLException {
+		Task task = new Task();
+		task.setUserID(resultSet.getInt(1));
+		task.setTaskTitle(resultSet.getString(2));
+		task.setTaskDescription(resultSet.getString(3));
+		task.setGroupName(resultSet.getString(4));
+		return task;
 	}
 }
-
- //"INSERT INTO tasks (user_id, task_title, task_description, group_name) values ((SELECT id FROM users WHERE user_name = '?'), '?', '?', '?')";

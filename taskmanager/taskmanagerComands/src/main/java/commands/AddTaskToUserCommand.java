@@ -1,24 +1,22 @@
 package commands;
 
-import objects.Task;
-import service.TaskDAOService;
+import service.TaskServiceImpl;
 
-public class AddTaskToUserCommand implements Command{
-	private String []args;
-	
-	AddTaskToUserCommand(String []args){
-		this.args = args;
-	}
-	public String [] getArgs() {
-		return args;
+public class AddTaskToUserCommand implements Command {
+	private TaskServiceImpl taskServiceImpl = new TaskServiceImpl();
+	private String userName;
+	private String taskTitle;
+	private String taskDescription;
+	private String groupName;
+
+	AddTaskToUserCommand(String userName, String taskTitle, String taskDescription, String groupName) {
+		this.userName = userName;
+		this.taskTitle = taskTitle;
+		this.taskDescription = taskDescription;
+		this.groupName = groupName;
 	}
 
-	
-	@SuppressWarnings("rawtypes")
-	@Override
-	public void execute(){
-		String[] args = getArgs();
-		Task task = new Task(args[1], args[2], args[3], args[4]);
-		new TaskDAOService().createDao().insert(task);
+	public void execute() {
+		taskServiceImpl.addTask(userName, taskTitle, taskDescription, groupName);
 	}
 }
