@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+
 /**
  * Here is one of the main entity we'll be using to introduce data in our table
  * "Tasks"
@@ -62,6 +63,7 @@ public class Task {
 
 	public void setId(int id) {
 		this.id = id;
+
 	}
 
 	public String getTaskTitle() {
@@ -83,7 +85,6 @@ public class Task {
 	@Override
 	public String toString() {
 		return "Task_title: " + taskTitle + " Task_description: " + taskDescription;
-
 	}
 
 }

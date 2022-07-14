@@ -4,6 +4,7 @@ import service.UserServiceImpl;
 
 public class AddUserCommand implements Command {
 
+
 	private UserServiceImpl userService;
 	private String firstName;
 	private String lastName;
@@ -14,6 +15,7 @@ public class AddUserCommand implements Command {
 		this.lastName = lastName;
 		this.userName = userName;
 		userService = new UserServiceImpl();
+
 	}
 
 	@Override

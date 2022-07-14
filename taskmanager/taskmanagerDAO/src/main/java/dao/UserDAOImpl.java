@@ -65,3 +65,4 @@ public class UserDAOImpl extends DAOAbstract<User> implements UserDAO<User> {
 		}
 	}
 }
+

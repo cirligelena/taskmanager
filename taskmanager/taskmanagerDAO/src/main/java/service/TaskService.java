@@ -5,6 +5,7 @@ package service;
  * order to restrict direct access from a command to DAO
  */
 public interface TaskService {
+
 	/**
 	 * This method will be used to create and save a new task into database
 	 * 

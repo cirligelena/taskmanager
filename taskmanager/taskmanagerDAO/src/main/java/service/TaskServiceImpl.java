@@ -1,5 +1,6 @@
 package service;
 
+
 import annotations.SendMail;
 import dao.TaskDAO;
 import dao.TaskDAOImpl;
@@ -22,5 +23,4 @@ public class TaskServiceImpl implements TaskService {
 		taskDAOImpl.select();
 
 	}
-
 }
