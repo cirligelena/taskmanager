@@ -1,6 +1,7 @@
 target/
 
 release.properties
+.properties
 
 buildNumber.properties
 .mvn/timing.properties
@@ -10,10 +11,30 @@ buildNumber.properties
 /taskmanager/.project
 /taskmanager/myaplication_lib
 config.properties
+target/
+
+release.properties
+
+buildNumber.properties
+.mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+.mvn/wrapper/maven-wrapper.jar
+/taskmanager/.settings
+/taskmanager/.project
+/taskmanager/myaplication_lib
+config.properties
+hibernate.cfg.xml
+hibernate.properties
+mail.properties
 /taskmanager/taskmanagerComands/.settings
 /taskmanager/taskmanagerComands/.project
 /taskmanager/taskmanagerComands/.classpath
+/taskmanager/taskmanagerComands/build
 /taskmanager/taskmanagerDAO/.settings
 /taskmanager/taskmanagerDAO/.project
 /taskmanager/taskmanagerDAO/.classpath
+/taskmanager/taskmanagerDAO/build
+/taskmanager/taskmanagerDAO/bin
+/taskmanager/taskmanagerComands/bin
+
 .project
