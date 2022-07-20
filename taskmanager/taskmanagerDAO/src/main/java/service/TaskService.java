@@ -19,4 +19,6 @@ public interface TaskService {
 	 */
 	public void showAllTasks();
 
+	public void assignTasktoUser(String userName, String taskTitle);
+
 }

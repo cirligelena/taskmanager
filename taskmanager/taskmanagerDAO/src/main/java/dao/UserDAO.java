@@ -26,4 +26,12 @@ public interface UserDAO<T> extends DAO<T> {
 	 */
 
 	void insertUserAndTask(User user, Task Task);
+
+	/**
+	 * This method will be used to show user's tasks assigned
+	 * 
+	 * @param userName
+	 */
+
+	void selectUsersTasks(String userName);
 }

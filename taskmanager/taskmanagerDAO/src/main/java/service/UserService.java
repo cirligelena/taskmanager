@@ -44,4 +44,6 @@ public interface UserService {
 
 	public void addUserAndTask(String firstName, String lastName, String userName, String taskTitle,
 			String taskDescription);
+
+	public void showUsersTasks(String userName);
 }

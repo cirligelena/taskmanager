@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
 /**
  * Here is one of the main entity we'll be using to introduce data in our table
  * "Tasks"
@@ -29,7 +28,7 @@ public class Task {
 	@Column(name = "task_description")
 	private String taskDescription;
 	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = false)
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	/**

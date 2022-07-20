@@ -1,6 +1,5 @@
 package service;
 
-
 import annotations.SendMail;
 import dao.TaskDAO;
 import dao.TaskDAOImpl;
@@ -22,5 +21,10 @@ public class TaskServiceImpl implements TaskService {
 	public void showAllTasks() {
 		taskDAOImpl.select();
 
+	}
+
+	@Override
+	public void assignTasktoUser(String userName, String taskTitle) {
+		taskDAOImpl.assignTask(userName, taskTitle);
 	}
 }

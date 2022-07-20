@@ -2,9 +2,12 @@ package dao;
 
 import java.util.List;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -21,31 +24,47 @@ public abstract class DAOAbstract<T> implements DAO<T> {
 	public void select() {
 		Session session = factory.openSession();
 		Transaction tx = null;
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		CriteriaQuery<T> cr = cb.createQuery(clazz);
+		Root<T> root = cr.from(clazz);
+		cr.select(root);
 		try {
 			tx = session.beginTransaction();
-			@SuppressWarnings("unchecked")
-			Query<T> query = session.createQuery("from " + clazz.getName());
-			list = query.list();
+			Query<T> query = session.createQuery(cr);
+			list = query.getResultList();
 			tx.commit();
-			for (T t : list) {
-				System.out.println(t.toString());
-			}
+			list.stream().forEach(e -> System.out.println(e));
 		} catch (IllegalStateException e) {
 			if (tx != null)
 				tx.rollback();
 			logger.error(e);
 		} finally {
 			session.close();
-
 		}
 	}
+	/*
+	 * public void select() { Session session = factory.openSession(); Transaction
+	 * tx = null; try { tx = session.beginTransaction();
+	 * 
+	 * @SuppressWarnings("unchecked") Query<T> query = session.createQuery("from " +
+	 * clazz.getName()); list = query.list(); tx.commit(); for (T t : list) {
+	 * System.out.println(t.toString()); } } catch (IllegalStateException e) { if
+	 * (tx != null) tx.rollback(); logger.error(e); } finally { session.close();
+	 * 
+	 * } }
+	 */
 
 	public void insert(T t) {
 		Session session = factory.openSession();
+		Transaction tx = null;
 		try {
+			tx = session.beginTransaction();
 			session.persist(t);
 			logger.info("Data has been written succesfully ");
-		} catch (HibernateException e) {
+			tx.commit();
+		} catch (IllegalStateException e) {
+			if (tx != null)
+				tx.rollback();
 			logger.error(e);
 		} finally {
 			session.close();

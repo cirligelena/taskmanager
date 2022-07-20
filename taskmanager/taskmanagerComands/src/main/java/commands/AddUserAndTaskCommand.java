@@ -11,7 +11,7 @@ public class AddUserAndTaskCommand implements Command {
 	private String taskTitle;
 	private String taskDescription;
 
-	AddUserAndTaskCommand(String firstName, String lastName, String userName, String taskTitle,
+	public AddUserAndTaskCommand(String firstName, String lastName, String userName, String taskTitle,
 			String taskDescription) {
 		this.firstName = firstName;
 		this.lastName = lastName;
