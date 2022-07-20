@@ -16,22 +16,22 @@ import commands.ShowUsersTasksCommand;
 
 public class Executor {
 	private static final Logger logger = LogManager.getLogger(Executor.class);
-	DataFromConsole DataFromConsole;
-	ExecutorService executorService;
+	private DataFromConsole DataFromConsole;
+	private ExecutorService executorService;
 
-	Executor(DataFromConsole DataFromConsole) {
+	public Executor(DataFromConsole DataFromConsole) {
 		this.DataFromConsole = DataFromConsole;
 		executorService = Executors.newFixedThreadPool(4);
 	}
 
 	public void executeThreadPool() {
-		MyThreadTask task1 = new MyThreadTask(
-				new AddUserCommand(DataFromConsole.firstName, DataFromConsole.lastName, DataFromConsole.userName));
+		MyThreadTask task1 = new MyThreadTask(new AddUserCommand(DataFromConsole.getFirstName(),
+				DataFromConsole.getLastName(), DataFromConsole.getUserName()));
 		MyThreadTask task2 = new MyThreadTask(
-				new AddTaskCommand(DataFromConsole.taskTitle, DataFromConsole.taskDescription));
+				new AddTaskCommand(DataFromConsole.getTaskTitle(), DataFromConsole.getTaskDescription()));
 		MyThreadTask task3 = new MyThreadTask(
-				new AssignTaskToUserCommand(DataFromConsole.userName, DataFromConsole.taskTitle));
-		MyThreadTask task4 = new MyThreadTask(new ShowUsersTasksCommand(DataFromConsole.userName));
+				new AssignTaskToUserCommand(DataFromConsole.getUserName(), DataFromConsole.getTaskTitle()));
+		MyThreadTask task4 = new MyThreadTask(new ShowUsersTasksCommand(DataFromConsole.getUserName()));
 		Future<?> task1Status = executorService.submit(task1);
 		Future<?> task2Status = executorService.submit(task2);
 		try {

@@ -3,9 +3,9 @@ package taskmanagerApp;
 import commands.Command;
 
 public class MyThreadTask implements Runnable {
-	Command command;
+	private Command command;
 
-	MyThreadTask(Command command) {
+	public MyThreadTask(Command command) {
 		this.command = command;
 	}
 

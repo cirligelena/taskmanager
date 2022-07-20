@@ -33,11 +33,14 @@ public class UserDAOImpl extends DAOAbstract<User> implements UserDAO<User> {
 			Query<User> query = session.createQuery(cr);
 			list = query.getResultList();
 			tx.commit();
-			User user = list.stream().filter(u -> u.getUserName().equals(userName)).findFirst().get();
-			System.out.println("User " + user.getUserName() + " has the following tasks: ");
-			for (Task task : user.getTasklist()) {
-				System.out.println(task);
-			}
+			User user = list.stream().filter(u -> u.getUserName().equals(userName)).findFirst().orElse(null);
+			if (user != null) {
+				System.out.println("User " + user.getUserName() + " has the following tasks: ");
+				for (Task task : user.getTasklist()) {
+					System.out.println(task);
+				}
+			} else
+				System.out.println("User with such username doesn't exist");
 		} catch (IllegalStateException e) {
 			if (tx != null)
 				tx.rollback();
@@ -46,21 +49,6 @@ public class UserDAOImpl extends DAOAbstract<User> implements UserDAO<User> {
 			session.close();
 		}
 	}
-
-	/*
-	 * public void selectUsersTasks(String userName) { Session session =
-	 * factory.openSession(); Transaction tx = null; try { tx =
-	 * session.beginTransaction(); User user = new User(); String q =
-	 * "from User where userName = :userNameParam";
-	 * 
-	 * @SuppressWarnings("unchecked") Query<User> query2 = session.createQuery(q);
-	 * query2.setParameter("userNameParam", userName); user =
-	 * query2.getSingleResult(); System.out.println("User " + userName +
-	 * " has the following tasks: "); for (Task task : user.getTasklist()) {
-	 * System.out.println(task); } tx.commit(); } catch (IllegalStateException e) {
-	 * if (tx != null) tx.rollback(); logger.error(e); } finally { session.close();
-	 * } }
-	 */
 
 	@Override
 	public void insertTask(String userName, Task task) {

@@ -38,13 +38,16 @@ public class TaskDAOImpl extends DAOAbstract<Task> implements TaskDAO<Task> {
 			List<User> list1 = query.getResultList();
 			Query<Task> query2 = session.createQuery(cr2);
 			List<Task> list2 = query2.getResultList();
-			User user = list1.stream().filter(u -> u.getUserName().equals(userName)).findFirst().get();
-			Task task = list2.stream().filter(t -> t.getTaskTitle().equals(taskTitle)).findFirst().get();
-			user.getTasklist().add(task);
-			task.setUser(user);
-			session.persist(user);
-			tx.commit();
-			logger.info("Data has been written succesfully ");
+			User user = list1.stream().filter(u -> u.getUserName().equals(userName)).findFirst().orElse(null);
+			Task task = list2.stream().filter(t -> t.getTaskTitle().equals(taskTitle)).findFirst().orElse(null);
+			if (user != null && task != null) {
+				user.getTasklist().add(task);
+				task.setUser(user);
+				session.persist(user);
+				tx.commit();
+				logger.info("Data has been written succesfully ");
+			} else
+				System.out.println("Wrong username or taskTitle");
 		} catch (IllegalStateException e) {
 			if (tx != null)
 				tx.rollback();
@@ -53,25 +56,4 @@ public class TaskDAOImpl extends DAOAbstract<Task> implements TaskDAO<Task> {
 			session.close();
 		}
 	}
-	/*
-	 * public void assignTask(String userName, String taskTitle) { Session session =
-	 * factory.openSession(); Transaction tx = null; try { tx =
-	 * session.beginTransaction(); Task task = new Task(); String q1 =
-	 * "from Task where taskTitle = :taskTitleParam";
-	 * 
-	 * @SuppressWarnings("unchecked") Query<Task> query1 = session.createQuery(q1);
-	 * query1.setParameter("taskTitleParam", taskTitle); task =
-	 * query1.getSingleResult(); User user = new User(); String q2 =
-	 * "from User where userName = :userNameParam";
-	 * 
-	 * @SuppressWarnings("unchecked") Query<User> query2 = session.createQuery(q2);
-	 * query2.setParameter("userNameParam", userName); user =
-	 * query2.getSingleResult(); user.getTasklist().add(task); task.setUser(user);
-	 * session.persist(user); tx.commit();
-	 * logger.info("Data has been written succesfully "); } catch
-	 * (IllegalStateException e) { if (tx != null) tx.rollback(); logger.error(e); }
-	 * finally {
-	 * 
-	 * session.close(); } }
-	 */
 }

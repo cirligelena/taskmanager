@@ -45,5 +45,10 @@ public interface UserService {
 	public void addUserAndTask(String firstName, String lastName, String userName, String taskTitle,
 			String taskDescription);
 
+	/**
+	 * This method will be used to show user's tasks
+	 * 
+	 * @param userName
+	 */
 	public void showUsersTasks(String userName);
 }

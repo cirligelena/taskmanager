@@ -42,17 +42,6 @@ public abstract class DAOAbstract<T> implements DAO<T> {
 			session.close();
 		}
 	}
-	/*
-	 * public void select() { Session session = factory.openSession(); Transaction
-	 * tx = null; try { tx = session.beginTransaction();
-	 * 
-	 * @SuppressWarnings("unchecked") Query<T> query = session.createQuery("from " +
-	 * clazz.getName()); list = query.list(); tx.commit(); for (T t : list) {
-	 * System.out.println(t.toString()); } } catch (IllegalStateException e) { if
-	 * (tx != null) tx.rollback(); logger.error(e); } finally { session.close();
-	 * 
-	 * } }
-	 */
 
 	public void insert(T t) {
 		Session session = factory.openSession();
