@@ -11,7 +11,6 @@ public class UserServiceImpl implements UserService {
 	public UserServiceImpl() {
 	}
 
-
 	@SendMail
 	@Override
 	public void addUser(String firstName, String lastName, String userName) {
@@ -36,4 +35,11 @@ public class UserServiceImpl implements UserService {
 		userDAOImpl.insertUserAndTask(new User(firstName, lastName, userName), new Task(taskTitle, taskDescription));
 
 	}
+
+	@Override
+	public void showUsersTasks(String userName) {
+		userDAOImpl.selectUsersTasks(userName);
+
+	}
+
 }

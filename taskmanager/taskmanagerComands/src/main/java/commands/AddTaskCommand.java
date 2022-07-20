@@ -8,7 +8,7 @@ public class AddTaskCommand implements Command {
 	private String taskTitle;
 	private String taskDescription;
 
-	AddTaskCommand(String taskTitle, String taskDescription) {
+	public AddTaskCommand(String taskTitle, String taskDescription) {
 		this.taskTitle = taskTitle;
 		this.taskDescription = taskDescription;
 		taskService = new TaskServiceImpl();

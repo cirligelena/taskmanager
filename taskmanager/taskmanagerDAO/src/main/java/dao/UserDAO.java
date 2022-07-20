@@ -4,8 +4,9 @@ import entity.Task;
 import entity.User;
 
 /**
- * extends DAO and contains 2 additional methods "insertTask" and
- * "insertUserAndTask" that will be implemented in the class UserDAOImpl
+ * extends DAO and contains 3 additional methods "insertTask",
+ * "selectUsersTasks" and "insertUserAndTask" that will be implemented in the
+ * class UserDAOImpl
  * 
  * @param <T>
  */
@@ -26,4 +27,12 @@ public interface UserDAO<T> extends DAO<T> {
 	 */
 
 	void insertUserAndTask(User user, Task Task);
+
+	/**
+	 * This method will be used to show user's tasks assigned
+	 * 
+	 * @param userName
+	 */
+
+	void selectUsersTasks(String userName);
 }

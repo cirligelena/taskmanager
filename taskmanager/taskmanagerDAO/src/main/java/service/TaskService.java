@@ -19,4 +19,14 @@ public interface TaskService {
 	 */
 	public void showAllTasks();
 
+	/**
+	 * This method will be used to assign an existing Task to a user that already
+	 * exists
+	 * 
+	 * @param userName  of user to whom the task will be assigned
+	 * @param taskTitle of task that should be assigned
+	 */
+
+	public void assignTasktoUser(String userName, String taskTitle);
+
 }

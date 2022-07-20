@@ -1,16 +1,16 @@
 package commands;
 
+import service.UserService;
 import service.UserServiceImpl;
 
 public class AddUserCommand implements Command {
 
-
-	private UserServiceImpl userService;
+	private UserService userService;
 	private String firstName;
 	private String lastName;
 	private String userName;
 
-	AddUserCommand(String firstName, String lastName, String userName) {
+	public AddUserCommand(String firstName, String lastName, String userName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
